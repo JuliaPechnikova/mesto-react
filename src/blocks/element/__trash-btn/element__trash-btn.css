@@ -1,0 +1,7 @@
+.element__trash-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  visibility: hidden;
+}
