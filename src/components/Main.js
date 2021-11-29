@@ -38,7 +38,7 @@ function Main(props) {
       </ul>
     </section>
     </main>
-    );
-  }
+  );
+}
 
 export default Main;

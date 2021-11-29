@@ -13,7 +13,7 @@ function PopupWithForm(props) {
         <button type="submit" className={`popup__button popup__button-${props.name} ${props.theme} popup__button_disabled`}>{`${props.buttonTitle}`}</button>
       </form>
     </div>
-  </div>
+    </div>
   );
 }
 
