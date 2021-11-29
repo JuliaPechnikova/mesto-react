@@ -3,9 +3,13 @@ import React from 'react';
 
 function Card(props) {
 
+  function handleClick() {
+    props.onCardClick(props.card);
+  }
+
   return(
     <li className="element">
-      <img className="element__image" src={props.card.link} alt={props.card.name} onClick={props.onCardClick}/>
+      <img className="element__image" src={props.card.link} alt={props.card.name} onClick={handleClick}/>
       <button className="element__trash-btn" type="reset">
         <img className="element__trash-btn-image" src={trashButtonImage} alt="Очистить"/>
       </button>
