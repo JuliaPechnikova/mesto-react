@@ -1,6 +1,5 @@
-class Api extends React.Component {
+class Api {
   constructor(content) {
-    super(content);
     this._baseUrl = content.baseUrl;
     this._headers = content.headers;
   }
@@ -101,4 +100,13 @@ class Api extends React.Component {
     .then(this.serverResponseChecker)
   }
 }
-export default Api;
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-29/',
+  headers: {
+    'authorization': 'f941cb39-a05b-48d7-86db-8f1e836b871d',
+    'Content-Type': 'application/json'
+  }
+});
+
+export default api;

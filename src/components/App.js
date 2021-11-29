@@ -1,20 +1,24 @@
-import React from 'react'
+import React from 'react';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import ImagePopup from './ImagePopup.js';
 import PopupWithForm from './PopupWithForm.js';
-import Api from '../utils/Api.js';
+import api from '../utils/Api.js';
 
 import trashButtonImage from '../images/trash-button-img.svg';
 
 function App() {
 
+  const [user, setUser] =  React.useState(0);
+  const [card, setCard] =  React.useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =  React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
 
+  // Cекция реализует открытие и закрытие попап
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
   }
@@ -31,17 +35,42 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setEditAvatarPopupOpen(false);
+    setSelectedCard(null);
   }
 
+  //Открытие попап с картинкой
+  const handleCardClick = () => {
+    //setSelectedCard(card._id);
+  }
+
+
+  //Читаем данные из запроса по API
+  React.useEffect(() => {
+    api.getAllInfo()
+    .then(([cards, profileData]) => {
+      //profileID = profileData._id;
+      //userInfo.setUserInfo(profileData);
+      //profilePhoto.setUserPhoto(profileData);
+      //defaultCardList.renderItem(cards);
+      setUser(profileData);
+      setCard(cards);
+    })
+    .catch(err => console.log(`Ошибка инициализации данных: ${err}`));
+  }, []);
 
   return (
     <div className="App">
       <div className="page">
         <Header />
         <Main 
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
+        onEditProfile = {handleEditProfileClick}
+        onAddPlace = {handleAddPlaceClick}
+        onEditAvatar = {handleEditAvatarClick}
+        userName = {user.name}
+        userDescription = {user.about}
+        userAvatar = {user.avatar}
+        cards = {card}
+        onClickCard = {handleCardClick}
         />
         <Footer />
       </div>
@@ -119,8 +148,8 @@ function App() {
       </div> */}
       <PopupWithForm name="add-card" title="Вы уверены?" buttonTitle="Да" theme="popup__button_theme_delete-card">
       </PopupWithForm>
-      <ImagePopup />
-      <template id="element-template">
+      <ImagePopup selectedCard={card} onClose={closeAllPopups}/>
+      {/* <template id="element-template">
         <li className="element">
           <img className="element__image" src="#" alt="Карточка"/>
           <button className="element__trash-btn" type="reset">
@@ -134,7 +163,7 @@ function App() {
             </div>
           </div>
         </li>
-      </template>
+      </template> */}
     </div>
   );
 }
