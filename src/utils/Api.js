@@ -1,3 +1,4 @@
+
 class Api {
   constructor(content) {
     this._baseUrl = content.baseUrl;
