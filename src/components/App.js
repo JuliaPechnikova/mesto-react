@@ -4,12 +4,9 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import ImagePopup from './ImagePopup.js';
 import PopupWithForm from './PopupWithForm.js';
-import api from '../utils/Api.js';
 
 function App() {
 
-  const [user, setUser] =  React.useState(0);
-  const [card, setCard] =  React.useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =  React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -41,17 +38,6 @@ function App() {
     setSelectedCard(card);
   }
 
-  //Читаем данные из запроса по API
-  React.useEffect(() => {
-    api.getAllInfo()
-    .then(([cards, profileData]) => {
-      setUser(profileData);
-      setCard(cards);
-    })
-    .catch(err => console.log(`Ошибка инициализации данных: ${err}`));
-  }, []);
-
-
   return (
     <div className="App">
       <div className="page">
@@ -60,10 +46,6 @@ function App() {
         onEditProfile = {handleEditProfileClick}
         onAddPlace = {handleAddPlaceClick}
         onEditAvatar = {handleEditAvatarClick}
-        userName = {user.name}
-        userDescription = {user.about}
-        userAvatar = {user.avatar}
-        cards = {card}
         onCardClick = {handleCardClick}
         />
         <Footer />
