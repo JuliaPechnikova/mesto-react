@@ -29,7 +29,7 @@ function EditProfilePopup(props) {
 
 
   return (
-    <PopupWithForm name="edit-prifile-photo" title="Обновить аватар" buttonTitle="Сохранить" theme="" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
+    <PopupWithForm name="edit-prifile-photo" title="Обновить аватар" buttonTitle={props.buttonTitle} theme="" isOpen={props.isOpen} onClose={props.onClose} onSubmit={handleSubmit}>
       <input value={avatar} placeholder="Ссылка на картинку" className="popup__input" 
       id="avatar" name="avatar" type="url" required onChange={handleAvatarChange} ref={avatarRef}/>
       <span id="avatar-error" className="popup__error"></span>
