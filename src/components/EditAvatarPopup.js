@@ -25,7 +25,7 @@ function EditProfilePopup(props) {
   // его аватар будет использован в управляемых компонентах.
   React.useEffect(() => {
     setAvatar(currentUser.avatar);
-  }, [currentUser]); 
+  }, [currentUser, props.isOpen]); 
 
 
   return (
