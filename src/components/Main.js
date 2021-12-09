@@ -3,13 +3,11 @@ import avatarEditButton from '../images/avatar-edit-button.svg';
 import profileEditButton from '../images/profile-edit-button.svg';
 import profileAddButton from '../images/profile-add-button.svg';
 import CurrentUserContext from '../contexts/CurrentUserContext.js';
-import CurrentCardContext from '../contexts/CurrentCardContext.js';
 import Card from './Card.js';
 
 function Main(props) {
   
   const currentUser = React.useContext(CurrentUserContext);
-  const card = React.useContext(CurrentCardContext);
   
   return (
     <main className="content">
@@ -38,7 +36,7 @@ function Main(props) {
 
     <section>
       <ul className="elements"> 
-        {card.map(card =>
+        {props.cards.map(card =>
           <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
         )}
       </ul>
