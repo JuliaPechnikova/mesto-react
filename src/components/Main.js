@@ -7,22 +7,9 @@ import CurrentCardContext from '../contexts/CurrentCardContext.js';
 import Card from './Card.js';
 
 function Main(props) {
-
-  //const [user, setUser] =  React.useState({name: '', avatar: '', about: ''});
-  //const [card, setCard] =  React.useState([]);
   
   const currentUser = React.useContext(CurrentUserContext);
-  const currentCard = React.useContext(CurrentCardContext);
-
-  //Читаем данные из запроса по API
-  // React.useEffect(() => {
-  //   api.getAllInfo()
-  //   .then(([cards, profileData]) => {
-  //     setUser(profileData);
-  //     setCard(cards);
-  //   })
-  //   .catch(err => console.log(`Ошибка инициализации данных: ${err}`));
-  // }, []);
+  const card = React.useContext(CurrentCardContext);
   
   return (
     <main className="content">
@@ -51,8 +38,8 @@ function Main(props) {
 
     <section>
       <ul className="elements"> 
-        {currentCard.map(card =>
-          <Card card={card} key={card._id} onCardClick={props.onCardClick}/>
+        {card.map(card =>
+          <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
         )}
       </ul>
     </section>

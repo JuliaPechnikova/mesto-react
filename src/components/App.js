@@ -16,19 +16,50 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
   
   const [currentUser, setCurrentUser] = React.useState({name: '', avatar: '', about: ''});
-  const [currentCard, setCurrentCard] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
 
   //Читаем данные из запроса по API
   React.useEffect(() => {
     api.getAllInfo()
     .then(([cards, profileData]) => {
       setCurrentUser(profileData);
-      setCurrentCard(cards);
+      setCards(cards);
     })
     .catch(err => console.log(`Ошибка инициализации данных: ${err}`));
   }, []);
 
   // Cекция реализует открытие и закрытие попап форм
+
+  function handleCardLike(card) {
+    // Проверяем, есть ли уже лайк на карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    if (isLiked === false) {
+      api.putCardLikes(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+    }
+    else {
+      api.deleteCardLikes(card._id, isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      });
+    }
+  }
+
+
+  function handleCardDelete(card) {
+    const isOwn = card.owner._id === currentUser._id;
+    
+    if (isOwn === true) {
+      api.deleteCard(card._id, isOwn)
+      .then(() => {
+        setCards(cards.filter((c) => c !== card));
+      });
+    }
+  }
 
   const handleEditProfileClick = () => {
     setEditProfilePopupOpen(true);
@@ -56,7 +87,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <CurrentCardContext.Provider value={currentCard}>
+      <CurrentCardContext.Provider value={cards}>
       <div className="App">
         <div className="page">
           <Header />
@@ -65,6 +96,8 @@ function App() {
           onAddPlace = {handleAddPlaceClick}
           onEditAvatar = {handleEditAvatarClick}
           onCardClick = {handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
           />
           <Footer />
         </div>
